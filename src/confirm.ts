@@ -4,10 +4,16 @@
  */
 const questions = [
   {
+    type: 'input',
+    name: 'name',
+    message: '请输入项目名称',
+    default: 'easyya_pc',
+  },
+  {
     type: 'list',
     name: 'template',
     message: '请选择模板',
-    choices: ['PC', 'WEAPP', 'H5'],
+    choices: ['pc', 'weapp', 'h5'],
   },
   {
     type: 'list',
