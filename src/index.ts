@@ -4,7 +4,7 @@ import Generate from './create.generate';
 import Api from './create.api';
 
 const program = new Command();
-program.name('ezt').description('CLI to EasyYa').version('0.0.4');
+program.name('ezt').description('CLI to EasyYa').version('0.0.5');
 
 // 创建项目
 Project(program);
