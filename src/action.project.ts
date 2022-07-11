@@ -3,6 +3,7 @@
  * @Date: 2022-07-11 11:07:22
  */
 import child from 'child_process';
+import path from 'path';
 import inquirer from 'inquirer';
 import { clone } from './git.tool';
 
@@ -35,7 +36,8 @@ export default () => {
       // 下载模板
       child.execSync(clone({ template, name }));
       if (api === '是') {
-        child.execSync(`node ./src/utils/api.js`);
+        const apiPath = `${path.resolve(__dirname, '..')}/src/utils/api.js`;
+        child.execSync(`node ${apiPath} ${name}`);
       }
     })
     .catch((error) => {

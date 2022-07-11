@@ -32,7 +32,6 @@ class SW {
     this.modules = this.config?.includes
       ? modules.data?.filter((k) => this.config?.includes?.includes(k.name))
       : modules.data;
-
     utils.mkdir('src');
     /** 不需要生成resource文件 */
     // utils.mkdir('src/swagger/resources')
