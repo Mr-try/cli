@@ -4,22 +4,39 @@
  */
 import child from 'child_process';
 import inquirer from 'inquirer';
-import confirm from './confirm';
+import { clone } from './git.tool';
+
+const questions = [
+  {
+    type: 'input',
+    name: 'name',
+    message: '请输入项目名称',
+    default: 'easyya_pc',
+  },
+  {
+    type: 'list',
+    name: 'template',
+    message: '请选择模板',
+    choices: ['pc', 'weapp', 'h5'],
+  },
+  {
+    type: 'list',
+    name: 'api',
+    message: '是否使用API',
+    choices: ['是', '否'],
+  },
+];
 
 export default () => {
   inquirer
-    .prompt(confirm)
+    .prompt(questions)
     .then((answers) => {
-      const { name, template } = answers;
+      const { name, template, api } = answers;
       // 下载模板
-      child.exec(
-        `git clone git@git.easyya.com:npm/template_${template}.git ${name}`,
-        (error) => {
-          if (error) {
-            console.log('error', error);
-          }
-        }
-      );
+      child.execSync(clone({ template, name }));
+      if (api === '是') {
+        child.execSync(`node ./src/utils/api.js`);
+      }
     })
     .catch((error) => {
       console.log('error', error);
