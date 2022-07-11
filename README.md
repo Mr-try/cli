@@ -1,6 +1,6 @@
 ### 创建项目
 
-> ezt init projectName
+> ezt init
 
 ### 创建代码页面
 
