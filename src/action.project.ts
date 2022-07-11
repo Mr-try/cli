@@ -37,7 +37,9 @@ export default () => {
       child.execSync(clone({ template, name }));
       if (api === '是') {
         const apiPath = `${path.resolve(__dirname, '..')}/src/utils/api.js`;
-        child.execSync(`node ${apiPath} ${name}`);
+        child.execSync(`node ${apiPath}`, {
+          cwd: `./${name}`,
+        });
       }
     })
     .catch((error) => {

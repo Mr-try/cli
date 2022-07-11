@@ -246,5 +246,6 @@ class SW {
     );
   }
 }
+console.log('process.argv.slice(2);2222222333', process.argv.slice(2));
 
 new SW().init();
