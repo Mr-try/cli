@@ -1,7 +1,8 @@
 {
-  "version": "0.0.5",
+  "version": "0.0.6",
   "license": "MIT",
   "main": "dist/index.js",
+  "description": "ezt.js is a cli for easyya company web developer",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
@@ -62,5 +63,14 @@
     "commander": "^9.3.0",
     "inquirer": "8",
     "prettier": "^2.7.1"
-  }
+  },
+  "keywords": [
+    "ezt",
+    "ezt.js",
+    "ezt js",
+    "easyya",
+    "cli",
+    "cli umi",
+    "swagger api"
+  ]
 }
