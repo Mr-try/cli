@@ -3,8 +3,6 @@
  * @Date: 2022-07-11 11:07:22
  */
 import child from 'child_process';
-// import path from 'path';
-import CreateApi from './utils/api';
 import inquirer from 'inquirer';
 import { clone } from './git.tool';
 
@@ -36,12 +34,11 @@ export default () => {
       const { name, template, api } = answers;
       // 下载模板
       child.execSync(clone({ template, name }));
+
       if (api === '是') {
-        new CreateApi().init();
-        // const apiPath = `${path.resolve(__dirname, '..')}/src/utils/api.js`;
-        // child.execSync(`node ${apiPath}`, {
-        //   cwd: `./${name}`,
-        // });
+        child.exec(`ezt api`, {
+          cwd: `./${name}`,
+        });
       }
     })
     .catch((error) => {

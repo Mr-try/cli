@@ -1,5 +1,5 @@
 {
-  "version": "0.0.7",
+  "version": "0.0.8",
   "license": "MIT",
   "main": "dist/index.js",
   "description": "ezt.js is a cli for easyya company web developer",
@@ -19,6 +19,7 @@
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "size": "size-limit",
+    "api": "ezt api",
     "analyze": "size-limit --why"
   },
   "peerDependencies": {},
