@@ -4,4 +4,4 @@
  */
 import CreateApi from './utils/api';
 
-export default (prefix?: string) => new CreateApi().init(prefix);
+export default () => new CreateApi().init();

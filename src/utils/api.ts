@@ -24,8 +24,8 @@ export default class SW {
     this.modules = [];
   }
 
-  async init(prefix = '') {
-    this.config = Object.assign(this.config, { prefix, ...config });
+  async init() {
+    this.config = Object.assign(this.config, config);
     /** 取出所有微服务的resource对象 */
     await this.getAllModules();
   }
