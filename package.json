@@ -71,5 +71,6 @@
     "cli",
     "cli umi",
     "swagger api"
-  ]
+  ],
+  "homepage": "https://github.com/Mr-try/cli"
 }
