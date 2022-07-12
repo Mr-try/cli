@@ -2,12 +2,15 @@
  * @Author: Mr.try
  * @Date: 2022-02-11 13:49:53
  */
-const fs = require('fs');
-const axios = require('axios');
-const config = require('./sw.json');
-const utils = require('./api.utils');
+import fs from 'fs';
+import axios from 'axios';
+import config from './sw';
+import utils from './api.utils';
 
-class SW {
+export default class SW {
+  config: any;
+  doc: any;
+  modules: any;
   constructor() {
     this.config = {
       swaggerUrl: '',
@@ -30,7 +33,9 @@ class SW {
   async getAllModules() {
     const modules = await axios.get(this.config.swaggerUrl);
     this.modules = this.config?.includes
-      ? modules.data?.filter((k) => this.config?.includes?.includes(k.name))
+      ? modules.data?.filter((k: any) =>
+          this.config?.includes?.includes(k.name)
+        )
       : modules.data;
     utils.mkdir('src');
     /** 不需要生成resource文件 */
@@ -41,17 +46,17 @@ class SW {
 
     for (let index = 0; index < this.modules.length; index++) {
       const mod = this.modules[index];
-      console.log(
-        '\x1B[36m%s\x1B[0m',
-        `----------开始获取${mod.name}数据---------`
-      );
+      // console.log(
+      //   '\x1B[36m%s\x1B[0m',
+      //   `----------开始获取${mod.name}数据---------`
+      // );
       try {
         const res = await axios.get(this.config.host + mod.location);
         if (typeof res.data == 'string') {
-          console.log(
-            '\x1B[31m%s\x1B[0m',
-            `----------获取${mod.name}数据失败:${res.data}---------`
-          );
+          // console.log(
+          //   '\x1B[31m%s\x1B[0m',
+          //   `----------获取${mod.name}数据失败:${res.data}---------`
+          // );
         } else {
           // const fileContent = `
           //   const resources = ${JSON.stringify(res.data)}
@@ -65,21 +70,21 @@ class SW {
             res.data.paths,
             res.data.basePath
           );
-          console.log(
-            '\x1B[36m%s\x1B[0m',
-            `----------获取${mod.name}数据成功---------`
-          );
+          // console.log(
+          //   '\x1B[36m%s\x1B[0m',
+          //   `----------获取${mod.name}数据成功---------`
+          // );
         }
       } catch (error) {
-        console.log(
-          '\x1B[31m%s\x1B[0m',
-          `----------获取${mod.name}数据失败---------`
-        );
-        console.log('url', this.config.host + mod.location);
-        console.log(
-          '\x1B[31m%s\x1B[0m',
-          `----------获取${mod.name}数据失败---------`
-        );
+        // console.log(
+        //   '\x1B[31m%s\x1B[0m',
+        //   `----------获取${mod.name}数据失败---------`
+        // );
+        // console.log('url', this.config.host + mod.location);
+        // console.log(
+        //   '\x1B[31m%s\x1B[0m',
+        //   `----------获取${mod.name}数据失败---------`
+        // );
       }
     }
   }
@@ -87,7 +92,7 @@ class SW {
   /**
    * 根据definitions生成对象类型
    */
-  generateMods(name, definitions) {
+  generateMods(name: any, definitions: any) {
     name = utils.toCamel(name).substring(1);
     if (name.substr(name.length - 1, 1) == '/') {
       name = name.substring(0, name.length - 1);
@@ -112,7 +117,7 @@ class SW {
    * 第一步:先生成所有对象声明
    * 第二步:生成每条url的回调
    */
-  generateApis(name, pathsObj, rootPath) {
+  generateApis(name: any, pathsObj: any, rootPath: any) {
     const paths = Object.keys(pathsObj);
     /*
      *合并简化单个method方法的初始对象
@@ -145,7 +150,7 @@ class SW {
     let ReqInterface = '';
     let fnString = '';
 
-    finalPath.forEach((apiFn, index) => {
+    finalPath.forEach((apiFn) => {
       let apiFnName = utils.coverString(apiFn);
       const resObj = utils.toUpper(`Res_${apiFnName}`);
       let reqObj = utils.toUpper(`Req_${apiFnName}`);
@@ -164,14 +169,14 @@ class SW {
         '`' +
         `${rootPath}${crt.api?.replace(
           /\{(.*?)\}/g,
-          ($0, $1) => '${' + `data.${$1}` + '}'
+          (_$0: any, $1: any) => '${' + `data.${$1}` + '}'
         )}` +
         '`';
       /** 处理入参interface */
-      let schemaName = [];
+      let schemaName: any = [];
       if (crt.parameters) {
         let paramStr = '';
-        crt.parameters.forEach((p) => {
+        crt.parameters.forEach((p: any) => {
           let type = '';
           if (p.schema && p.schema.$ref) {
             const schema = p.schema.$ref
@@ -194,7 +199,7 @@ class SW {
         });
         ReqInterface += `type ${reqObj} = {${paramStr}} \n`;
         let params = '';
-        schemaName?.forEach((k) => {
+        schemaName?.forEach((k: any) => {
           if (k) {
             params = '&' + params + reqObj + `['${k}']`;
           }
@@ -246,6 +251,3 @@ class SW {
     );
   }
 }
-console.log('process.argv.slice(2);2222222333', process.argv.slice(2));
-
-new SW().init();

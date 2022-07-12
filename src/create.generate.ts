@@ -3,7 +3,7 @@
  * @Date: 2022-07-07 10:42:26
  */
 import { Command } from 'commander';
-
+import Action from './action.generate';
 export default (program: Command) => {
   program
     .command('p')
@@ -11,6 +11,8 @@ export default (program: Command) => {
     .argument('<文件名称>', '页面名称')
     .action((str, options) => {
       const limit = options.first ? 1 : undefined;
-      console.log(3333, str.split(options.separator, limit));
+      const [name] = str.split(options.separator, limit);
+      const params = name?.split('/');
+      Action(params);
     });
 };

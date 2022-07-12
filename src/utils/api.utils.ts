@@ -2,31 +2,31 @@
  * @Author: Mr.try
  * @Date: 2022-07-07 08:37:39
  */
-const fs = require('fs');
-module.exports = {
-  toCamelWithout: function (str) {
+import fs from 'fs';
+export default {
+  toCamelWithout: function (str: string) {
     str = this.toCamel(str).substring(1);
     return this.toUpper4(this.toUpper2(str)).replace(/\/{.*?\}/g, '');
   },
-  toUpper: function (str) {
-    return str.replace(/_(\w)/g, ($0, $1) => $1?.toUpperCase());
+  toUpper: function (str: string) {
+    return str.replace(/_(\w)/g, (_$0, $1) => $1?.toUpperCase());
   },
-  toUpper2: function (str) {
-    return str.replace(/\/(\w)/g, ($0, $1) => $1?.toUpperCase());
+  toUpper2: function (str: string) {
+    return str.replace(/\/(\w)/g, (_$0, $1) => $1?.toUpperCase());
   },
-  toUpper3: function (str) {
-    return str.replace(/-(\w)/g, ($0, $1) => $1?.toUpperCase());
+  toUpper3: function (str: string) {
+    return str.replace(/-(\w)/g, (_$0, $1) => $1?.toUpperCase());
   },
-  toUpper4: function (str) {
+  toUpper4: function (str: string) {
     return str.replace(
       /\/{(.*?)\}/g,
-      ($0, $1) => $1[0].toUpperCase() + $1.substring(1)
+      (_$0, $1) => $1[0].toUpperCase() + $1.substring(1)
     );
   },
-  coverString: function (str) {
+  coverString: function (str: string) {
     return this.toUpper2(str?.replace(/\/{.*?\}/g, '')?.replace('**', ''));
   },
-  objToString: function (obj) {
+  objToString: function (obj: any): any {
     let str = '';
     for (let p in obj) {
       if (obj.hasOwnProperty(p)) {
@@ -39,19 +39,19 @@ module.exports = {
     }
     return str;
   },
-  to$: function (str) {
+  to$: function (str: string) {
     return str.replace(/\./g, '$');
   },
-  cover$: function (str) {
+  cover$: function (str: string) {
     return str.replace(/\$/g, '.');
   },
-  toCamel: function (str) {
-    const temp = str.replace(/([^-])(?:-+([^-]))/g, ($0, $1, $2) => {
+  toCamel: function (str: string) {
+    const temp = str.replace(/([^-])(?:-+([^-]))/g, (_$0, $1, $2) => {
       return $1 + $2.toUpperCase();
     });
     return this.to$(temp);
   },
-  toLowerLine: function (str) {
+  toLowerLine: function (str: string) {
     var temp = str.replace(/[A-Z]/g, function (match) {
       return '-' + match.toLowerCase();
     });
@@ -60,7 +60,7 @@ module.exports = {
     }
     return this.cover$(temp);
   },
-  checkFs: function (fileName) {
+  checkFs: function (fileName: string): any {
     let result = {};
     let stats;
     try {
@@ -75,19 +75,13 @@ module.exports = {
     return result;
   },
 
-  mkdir: function (fileName) {
+  mkdir: function (fileName: string) {
     if (!this.checkFs(fileName).isDirectory) {
-      fs.mkdirSync(fileName, function (err) {
-        if (err) {
-          console.log(err);
-          return false;
-        }
-        console.log('model创建成功');
-      });
+      fs.mkdirSync(fileName);
     }
   },
 
-  generateInterface: function (k, def) {
+  generateInterface: function (k: any, def: any) {
     let obj = '';
     if (!def.properties) {
       obj += `[k:string]: any ,\n`;
@@ -149,7 +143,7 @@ module.exports = {
     `;
   },
 
-  coverType: function (v) {
+  coverType: function (v: any): any {
     switch (v.type) {
       case 'string':
         return 'string';
