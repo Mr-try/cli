@@ -18,5 +18,5 @@ export default (params: any) => {
   });
 
   fs.writeFileSync(`${crt}/${fileName}.tsx`, HookTmp(), 'utf8');
-  fs.writeFileSync(`${crt}/${fileName}.less`, Less(), 'utf8');
+  fs.writeFileSync(`${crt}/${fileName}.module.less`, Less(), 'utf8');
 };
