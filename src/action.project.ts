@@ -3,6 +3,7 @@
  * @Date: 2022-07-11 11:07:22
  */
 import child from 'child_process';
+import fs from 'fs';
 import inquirer from 'inquirer';
 import { clone } from './git.tool';
 
@@ -34,7 +35,8 @@ export default () => {
       const { name, template, api } = answers;
       // 下载模板
       child.execSync(clone({ template, name }));
-
+      // 删除git文件
+      fs.rm(`./${name}/.git`, { recursive: true }, () => {});
       if (api === '是') {
         child.exec(`ezt api`, {
           cwd: `./${name}`,
